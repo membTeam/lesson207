@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@Component
+//@Component
 public class EmployeesServiceEmpl implements EmployeesService {
 
     private EmploeesRepositories emploeesRepositories;
@@ -25,7 +25,7 @@ public class EmployeesServiceEmpl implements EmployeesService {
     private void initMap(){
         mapEmploees = new HashMap<>();
         for(var item : emploeesRepositories.findAll()){
-            mapEmploees.put(item.getId(), item);
+            mapEmploees.put(item.getPasport(), item);
         }
     }
 
@@ -42,47 +42,41 @@ public class EmployeesServiceEmpl implements EmployeesService {
     }
 
     @Override
-    public Emploees modfEmploees(Emploees emploees) {
-
-        String err = "";
-        try{
-            emploeesRepositories.save(emploees);
-            initMap();
-
-        } catch (Exception ex){
-            err = ex.getMessage();
-            throw new EmployeeStorageIsFullException(err);
+    public Emploees modfEmploees(Emploees emploee) {
+        if (mapEmploees.get(emploee.getPasport()) == null) {
+            throw new EmployeeStorageIsFullException("Нет данных по сотруднику");
         }
 
-        return mapEmploees.get(emploees.getId());
+        mapEmploees.put(emploee.getPasport(), emploee);
+        return mapEmploees.get(emploee.getPasport());
     }
 
     @Override
     public Emploees addEmploee(Emploees emploee) {
+        if (mapEmploees.get(emploee.getPasport()) != null) {
+            throw new EmployeeStorageIsFullException("Повторный ввод данных");
+        }
 
-        var resSave = emploeesRepositories.save(emploee);
-        initMap();
+        mapEmploees.put(emploee.getPasport(), emploee);
 
-        return mapEmploees.get(resSave.getId());
+        var result = mapEmploees.get(emploee.getPasport());
+
+        return result;
     }
 
     @Override
-    public String deleteEmploee(String id) {
-        var result = mapEmploees.remove(id);
-
-        if (result == null){
+    public String deleteEmploee(String pasport) {
+        if (mapEmploees.get(pasport) == null) {
             throw new EmployeeStorageIsFullException("Нет данных по сотруднику");
         }
 
-        emploeesRepositories.deleteById(result.getId());
-        initMap();
-
+        var result = mapEmploees.remove(pasport);
         return "Выполнено удаление " + result.getFirstname() + " " + result.getLastname();
     }
 
     @Override
-    public Emploees findEmploee(String id) {
-        var result = mapEmploees.get(id);
+    public Emploees findEmploee(String pasport) {
+        var result = mapEmploees.get(pasport);
         if (result == null){
             throw new EmployeeStorageIsFullException("Нет данных по сотруднику");
         }

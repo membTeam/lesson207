@@ -1,17 +1,22 @@
 package lesson207.models;
 
 import lesson207.config.GeneratedId;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
 import java.util.Objects;
 
 @Data
 @Builder
-public class Emploees implements GeneratedId {
+@NoArgsConstructor
+@AllArgsConstructor
+public class Emploees {
     @Id
     private String id;
+    private String pasport;
     private String firstname;
     private String lastname;
 
@@ -20,11 +25,11 @@ public class Emploees implements GeneratedId {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Emploees emploees = (Emploees) o;
-        return Objects.equals(id, emploees.id);
+        return Objects.equals(pasport, emploees.pasport);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(pasport);
     }
 }

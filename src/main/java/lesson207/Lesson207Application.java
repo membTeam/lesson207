@@ -10,4 +10,13 @@ public class Lesson207Application {
 		SpringApplication.run(Lesson207Application.class, args);
 	}
 
+	/*@Bean
+	public CommandLineRunner dataLoader(EmploeesRepositories repo){
+
+		return args -> {
+			var configData = new ConfigrurationData();
+			configData.LoadDataIntoDB(repo);
+		};
+	}*/
+
 }

@@ -1,5 +1,6 @@
 package lesson207.web;
 
+import lesson207.repositories.EmploeesRepositories;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import lesson207.models.Emploees;
@@ -13,8 +14,8 @@ import java.util.List;
 public class EmploeesController {
 
     private EmployeesServiceEmpl employeesServiceEmpl;
-    public EmploeesController(EmployeesServiceEmpl employeesServiceEmpl){
-        this.employeesServiceEmpl = employeesServiceEmpl;
+    public EmploeesController(EmploeesRepositories repo){
+        this.employeesServiceEmpl = new EmployeesServiceEmpl(repo);
     }
 
     @GetMapping("/info")
@@ -43,9 +44,9 @@ public class EmploeesController {
         return employeesServiceEmpl.allEmploee();
     }
 
-    @GetMapping("/del-emploee/{id}")
-    public String delEmploee(@PathVariable("id") String id){
-        return employeesServiceEmpl.deleteEmploee(id);
+    @GetMapping("/del-emploee/{pasport}")
+    public String delEmploee(@PathVariable("pasport") String pasport){
+        return employeesServiceEmpl.deleteEmploee(pasport);
     }
 
 

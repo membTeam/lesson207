@@ -1,6 +1,7 @@
 package lesson207;
 
 
+import lesson207.config.ConfigrurationData;
 import lesson207.models.Emploees;
 import lesson207.service.EmployeesServiceEmpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,17 +22,22 @@ public class EmploeesTests {
 
     private EmployeesServiceEmpl employeesServiceEmpl;
 
+
+
     @BeforeEach
     void setup(){
+        ConfigrurationData configData = new ConfigrurationData();
+        configData.LoadDataIntoDB(emploeesRepositories);
         employeesServiceEmpl = new EmployeesServiceEmpl(emploeesRepositories);
     }
 
     @Test
     public void CanFindEmploee() {
+        var count = emploeesRepositories.count();
         Emploees emploees = emploeesRepositories.findFirstEmploee();
 
-        var id = emploees.getId();
-        var resFindEmploee = employeesServiceEmpl.findEmploee(id);
+        var pasport = emploees.getPasport();
+        var resFindEmploee = employeesServiceEmpl.findEmploee(pasport);
 
         assertThat(resFindEmploee).isEqualTo(emploees);
         System.out.println(emploees);
@@ -39,7 +45,7 @@ public class EmploeesTests {
 
     @Test
     public void CanAddEmploee(){
-        var emploee = Emploees.builder().firstname("FirstName").lastname("LastName").build();
+        var emploee = Emploees.builder().pasport("62 12454").firstname("FirstName").lastname("LastName").build();
 
         Integer amountBefor = employeesServiceEmpl.getAmountExt();
         employeesServiceEmpl.addEmploee(emploee);
@@ -60,7 +66,7 @@ public class EmploeesTests {
 
         employeesServiceEmpl.modfEmploees(emploee);
 
-        var emploeeAfterSave = employeesServiceEmpl.findEmploee(emploee.getId());
+        var emploeeAfterSave = employeesServiceEmpl.findEmploee(emploee.getPasport());
 
         assertThat(emploeeAfterSave.getFirstname()).isEqualTo(firstNameEditing);
     }
@@ -69,7 +75,7 @@ public class EmploeesTests {
     public void CanDeleteEmploee() {
         var emploee = employeesServiceEmpl.allEmploee().get(0);
 
-        var resDelete = employeesServiceEmpl.deleteEmploee(emploee.getId());
+        var resDelete = employeesServiceEmpl.deleteEmploee(emploee.getPasport());
         var strAssert = "Выполнено удаление " + emploee.getFirstname() + " " + emploee.getLastname();
 
         assertThat(resDelete).isEqualTo(strAssert);

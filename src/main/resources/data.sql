@@ -1,11 +1,11 @@
-insert into Emploees(id, lastname, firstname)
-values(RANDOM_UUID() ,'Андреева','Мария'),
-(RANDOM_UUID() ,'Андрианов','Даниил'),
-(RANDOM_UUID() ,'Анисимова','Екатерина'),
-(RANDOM_UUID() ,'Артамонов','Денис'),
-(RANDOM_UUID() ,'Артемов','Кирилл'),
-(RANDOM_UUID() ,'Афанасьев','Илья'),
-(RANDOM_UUID() ,'Беляева','Алиса'),
-(RANDOM_UUID() ,'Борисов','Егор'),
-(RANDOM_UUID() ,'Васильева','София'),
-(RANDOM_UUID() ,'Бородина','София');
+insert into Emploees(id, pasport, lastname, firstname)
+values(RANDOM_UUID(), '60 12453','Мария','Андреева'),
+(RANDOM_UUID() ,'60 12454','Даниил','Андрианов'),
+(RANDOM_UUID() ,'60 12455','Екатерина','Анисимова'),
+(RANDOM_UUID() ,'60 12456','Денис','Артамонов'),
+(RANDOM_UUID() ,'60 12457','Кирилл','Артемов'),
+(RANDOM_UUID() ,'60 12458','Илья','Афанасьев'),
+(RANDOM_UUID() ,'60 12459','Алиса','Беляева'),
+(RANDOM_UUID() ,'60 12460','Егор', 'Борисов'),
+(RANDOM_UUID() ,'60 12461','София','Васильева'),
+(RANDOM_UUID() ,'60 12462','София','Бородина');
