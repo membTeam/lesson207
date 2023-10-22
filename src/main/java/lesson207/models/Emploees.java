@@ -1,6 +1,5 @@
 package lesson207.models;
 
-import lesson207.config.GeneratedId;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

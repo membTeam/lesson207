@@ -1,21 +1,21 @@
 package lesson207.web;
 
-import lesson207.repositories.EmploeesRepositories;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import lesson207.config.ConfigLoadData;
 import lesson207.models.Emploees;
 import lesson207.service.EmployeesServiceEmpl;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 
 @RestController
 @RequestMapping(path = "/serv" )
 public class EmploeesController {
 
     private EmployeesServiceEmpl employeesServiceEmpl;
-    public EmploeesController(EmploeesRepositories repo){
-        this.employeesServiceEmpl = new EmployeesServiceEmpl(repo);
+
+    public EmploeesController(ConfigLoadData configLoadData) {
+        this.employeesServiceEmpl = new EmployeesServiceEmpl(configLoadData);
     }
 
     @GetMapping("/info")

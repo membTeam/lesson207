@@ -1,8 +1,10 @@
 package lesson207.service;
 
+import lesson207.config.ConfigLoadData;
 import lesson207.exceptionAPI.EmployeeStorageIsFullException;
 import lesson207.models.Emploees;
 import lesson207.repositories.EmploeesRepositories;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -11,15 +13,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-//@Component
 public class EmployeesServiceEmpl implements EmployeesService {
 
     private EmploeesRepositories emploeesRepositories;
-    private Map<String, Emploees> mapEmploees;
-    public EmployeesServiceEmpl(EmploeesRepositories emploeesRepositories){
-        this.emploeesRepositories = emploeesRepositories;
 
-        initMap();
+    private Map<String, Emploees> mapEmploees;
+    public EmployeesServiceEmpl(ConfigLoadData configLoadData){
+        try {
+            configLoadData.run();
+            emploeesRepositories = configLoadData.getEmploeesRepositories();
+            initMap();
+        } catch (Exception ex) {
+            System.out.println("err EmployeesServiceEmpl " + ex.getMessage());
+        }
     }
 
     private void initMap(){

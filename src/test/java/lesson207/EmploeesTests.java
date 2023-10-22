@@ -1,8 +1,9 @@
 package lesson207;
 
 
-import lesson207.config.ConfigrurationData;
+import lesson207.config.ConfigLoadData;
 import lesson207.models.Emploees;
+import lesson207.repositories.EmploeesRepositories;
 import lesson207.service.EmployeesServiceEmpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,24 +12,25 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import lesson207.repositories.EmploeesRepositories;
-
 
 @SpringBootTest
 public class EmploeesTests {
 
-    @Autowired
     private EmploeesRepositories emploeesRepositories;
+
+    @Autowired
+    private ConfigLoadData configLoadData;
 
     private EmployeesServiceEmpl employeesServiceEmpl;
 
-
-
     @BeforeEach
     void setup(){
-        ConfigrurationData configData = new ConfigrurationData();
-        configData.LoadDataIntoDB(emploeesRepositories);
-        employeesServiceEmpl = new EmployeesServiceEmpl(emploeesRepositories);
+        try {
+            employeesServiceEmpl = new EmployeesServiceEmpl(configLoadData);
+            emploeesRepositories = configLoadData.getEmploeesRepositories();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     @Test
